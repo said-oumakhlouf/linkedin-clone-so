@@ -10,9 +10,23 @@ const Login = () => {
     const [name, setName] = useState("");
     const [profilePic, setProfilePic] = useState("");
     const dispatch = useDispatch();
+
     const loginToApp = (e) => {
-        e.preventDefault()
-    }
+        e.preventDefault();
+
+        auth.signInWithEmailAndPassword(email, password)
+        .then((userAuth) => {
+            dispatch(
+                login({
+                    email: userAuth.user.email,
+                    uid: userAuth.user.uid,
+                    displayName: userAuth.user.displayName,
+                    profileUrl: userAuth.user.photoURL,
+                })
+            );
+        })
+        .catch(error => alert(error));
+    };
 
     const register = (e) => {
         if(!name) {
@@ -26,12 +40,14 @@ const Login = () => {
                 photoURL: profilePic,
             })
             .then(() => {
-                dispatch(login({
-                    email: userAuth.user.email,
-                    uid: userAuth.user.uid,
-                    displayName: name,
-                    photoURL: profilePic,
-                }));
+                dispatch(
+                    login({
+                        email: userAuth.user.email,
+                        uid: userAuth.user.uid,
+                        displayName: name,
+                        photoUrl: profilePic,
+                    })
+                );
             });
         }).catch((error) => alert(error));
     };
@@ -68,7 +84,10 @@ const Login = () => {
                     type="password"
                 />
 
-                <button type="submit" onClick={loginToApp}>Sign in</button>
+                <button 
+                    type="submit" 
+                    onClick={loginToApp}>Sign in
+                </button>
             </form>
 
                 <p>Êtes vous un membre ?
