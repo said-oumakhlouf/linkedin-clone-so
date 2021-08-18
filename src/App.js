@@ -5,6 +5,7 @@ import Feed from './components/Feed.js';
 import Header from './components/Header.js';
 import Login from './components/Login.js';
 import Sidebar from './components/Sidebar.js';
+import Widgets from './components/Widgets.js';
 import { login, logout, selectUser } from './features/userSlice.js';
 import { auth } from './firebase.js';
 
@@ -38,7 +39,7 @@ function App() {
         <div className="app__body">
           <Sidebar />
           <Feed />
-          {/* Widgets */}
+          <Widgets />
         </div>
       )}
     </div>
